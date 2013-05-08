@@ -90,7 +90,7 @@
 
 - (UIImage *)avatarImageForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [UIImage imageNamed:@"send.png"];
+    return [UIImage imageNamed:@"avatar.png"];
 }
 
 - (JSBubbleMessageStyle)messageStyleForRowAtIndexPath:(NSIndexPath *)indexPath
