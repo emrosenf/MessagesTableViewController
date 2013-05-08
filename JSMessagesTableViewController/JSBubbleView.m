@@ -39,14 +39,16 @@
 
 #define kMarginTop 8.0f
 #define kMarginBottom 4.0f
+#define kAvatarMargin 20.0f
 #define kPaddingTop 4.0f
 #define kPaddingBottom 8.0f
 #define kBubblePaddingRight 35.0f
 
 @interface JSBubbleView()
 
+@property (assign, nonatomic) CGSize avatarSize;
+
 - (void)setup;
-- (BOOL)styleIsOutgoing;
 
 @end
 
@@ -63,12 +65,13 @@
     self.backgroundColor = [UIColor clearColor];
 }
 
-- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle
+- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle avatarSize:(CGSize)avatarSize
 {
     self = [super initWithFrame:frame];
     if(self) {
-        [self setup];
         self.style = bubbleStyle;
+        self.avatarSize = avatarSize;
+        [self setup];
     }
     return self;
 }
@@ -91,7 +94,8 @@
 {
 	UIImage *image = [JSBubbleView bubbleImageForStyle:self.style];
     CGSize bubbleSize = [JSBubbleView bubbleSizeForText:self.text];
-	CGRect bubbleFrame = CGRectMake(([self styleIsOutgoing] ? self.frame.size.width - bubbleSize.width : 0.0f),
+    CGFloat margin =  self.avatarSize.width > 0 ? kAvatarMargin : 0;
+	CGRect bubbleFrame = CGRectMake(([self styleIsOutgoing] ? self.frame.size.width - bubbleSize.width - self.avatarSize.width - margin: 0.0f + self.avatarSize.width + margin),
                                     kMarginTop,
                                     bubbleSize.width,
                                     bubbleSize.height);
@@ -99,7 +103,7 @@
 	[image drawInRect:bubbleFrame];
 	
 	CGSize textSize = [JSBubbleView textSizeForText:self.text];
-	CGFloat textX = (CGFloat)image.leftCapWidth - 3.0f + ([self styleIsOutgoing] ? bubbleFrame.origin.x : 0.0f);
+	CGFloat textX = (CGFloat)image.leftCapWidth - 3.0f + ([self styleIsOutgoing] ? bubbleFrame.origin.x : 0.0f + self.avatarSize.width + margin);
     CGRect textFrame = CGRectMake(textX,
                                   kPaddingTop + kMarginTop,
                                   textSize.width,

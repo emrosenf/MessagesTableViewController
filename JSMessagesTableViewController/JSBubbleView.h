@@ -51,7 +51,7 @@ typedef enum {
 @property (copy, nonatomic) NSString *text;
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle;
+- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle avatarSize:(CGSize)avatarSize;
 
 #pragma mark - Bubble view
 + (UIImage *)bubbleImageForStyle:(JSBubbleMessageStyle)style;
@@ -61,5 +61,6 @@ typedef enum {
 + (CGFloat)cellHeightForText:(NSString *)txt;
 + (int)maxCharactersPerLine;
 + (int)numberOfLinesForMessage:(NSString *)txt;
+- (BOOL)styleIsOutgoing;
 
 @end

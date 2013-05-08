@@ -171,18 +171,36 @@
 {
     JSBubbleMessageStyle style = [self.delegate messageStyleForRowAtIndexPath:indexPath];
     BOOL hasTimestamp = [self shouldHaveTimestampForRowAtIndexPath:indexPath];
+    UIImage *avatarImage = nil;
+    NSString *CellID;
     
-    NSString *CellID = [NSString stringWithFormat:@"MessageCell_%d_%d", style, hasTimestamp];
+    if([self.delegate respondsToSelector:@selector(avatarImageForRowAtIndexPath:)])
+    {
+        UIImage *image = [self.delegate avatarImageForRowAtIndexPath:indexPath];
+        if(image)
+        {
+            avatarImage = image;
+            CellID = [NSString stringWithFormat:@"MessageCell_%d_%d_%d", style, hasTimestamp, avatarImage.hash];
+        }
+    }
+    else
+    {
+        CellID = [NSString stringWithFormat:@"MessageCell_%d_%d", style, hasTimestamp];
+    }
+    
     JSBubbleMessageCell *cell = (JSBubbleMessageCell *)[tableView dequeueReusableCellWithIdentifier:CellID];
     
     if(!cell) {
         cell = [[JSBubbleMessageCell alloc] initWithBubbleStyle:style
                                                    hasTimestamp:hasTimestamp
+                                                    avatarImage:avatarImage
                                                 reuseIdentifier:CellID];
     }
     
     if(hasTimestamp)
         [cell setTimestamp:[self.dataSource timestampForRowAtIndexPath:indexPath]];
+    
+    
     
     [cell setMessage:[self.dataSource textForRowAtIndexPath:indexPath]];
     [cell setBackgroundColor:tableView.backgroundColor];
@@ -194,8 +212,15 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat dateHeight = [self shouldHaveTimestampForRowAtIndexPath:indexPath] ? DATE_LABEL_HEIGHT : 0.0f;
+    CGFloat textHeight = [JSBubbleView cellHeightForText:[self.dataSource textForRowAtIndexPath:indexPath]];
     
-    return [JSBubbleView cellHeightForText:[self.dataSource textForRowAtIndexPath:indexPath]] + dateHeight;
+    if([self.delegate respondsToSelector:@selector(avatarImageForRowAtIndexPath:)])
+    {
+        CGFloat avatarHeight = [self.delegate avatarImageForRowAtIndexPath:indexPath].size.height;
+        textHeight = textHeight < avatarHeight ? avatarHeight : textHeight;
+    }
+
+    return textHeight + dateHeight;
 }
 
 #pragma mark - Messages view controller

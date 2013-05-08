@@ -88,6 +88,11 @@
     [self finishSend];
 }
 
+- (UIImage *)avatarImageForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [UIImage imageNamed:@"send.png"];
+}
+
 - (JSBubbleMessageStyle)messageStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return (indexPath.row % 2) ? JSBubbleMessageStyleIncomingDefault : JSBubbleMessageStyleOutgoingDefault;

@@ -37,12 +37,14 @@
 #import "JSBubbleView.h"
 
 #define DATE_LABEL_HEIGHT 12.0f
+#define AVATAR_MARGIN 10.0f
 
 @interface JSBubbleMessageCell : UITableViewCell
 
 #pragma mark - Initialization
 - (id)initWithBubbleStyle:(JSBubbleMessageStyle)style
              hasTimestamp:(BOOL)hasTimestamp
+              avatarImage:(UIImage *)avatarImage
           reuseIdentifier:(NSString *)reuseIdentifier;
 
 #pragma mark - Message Cell
