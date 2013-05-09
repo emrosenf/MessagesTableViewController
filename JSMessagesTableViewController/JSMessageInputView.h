@@ -39,7 +39,7 @@
 
 @property (strong, nonatomic) UITextView *textView;
 @property (strong, nonatomic) UIButton *sendButton;
-@property (nonatomic, strong) UIImageView *inputFieldbackground;
+@property (strong, nonatomic) UIImageView *textViewBackground;
 
 #pragma mark - Initialization
 - (id)initWithFrame:(CGRect)frame
