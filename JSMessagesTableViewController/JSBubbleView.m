@@ -41,8 +41,11 @@
 #define kMarginBottom 4.0f
 #define kAvatarMargin 20.0f
 #define kPaddingTop 4.0f
+#define kPaddingTopUS2 7.0f
 #define kPaddingBottom 8.0f
 #define kBubblePaddingRight 35.0f
+#define kPaddingLeftOffset 3.0f
+#define kPaddingLeftOffsetUS2 5.0f
 
 @interface JSBubbleView()
 
@@ -93,19 +96,19 @@
 - (void)drawRect:(CGRect)frame
 {
 	UIImage *image = [JSBubbleView bubbleImageForStyle:self.style];
-    CGSize bubbleSize = [JSBubbleView bubbleSizeForText:self.text];
+    CGSize bubbleSize = [JSBubbleView bubbleSizeForText:self.text style:self.style];
     CGFloat margin =  self.avatarSize.width > 0 ? kAvatarMargin : 0;
-	CGRect bubbleFrame = CGRectMake(([self styleIsOutgoing] ? self.frame.size.width - bubbleSize.width - self.avatarSize.width - margin: 0.0f + self.avatarSize.width + margin),
+	CGRect bubbleFrame = CGRectMake(([JSBubbleView styleIsOutgoing:self.style] ? self.frame.size.width - bubbleSize.width - self.avatarSize.width - margin: 0.0f + self.avatarSize.width + margin),
                                     kMarginTop,
                                     bubbleSize.width,
                                     bubbleSize.height);
     
 	[image drawInRect:bubbleFrame];
 	
-	CGSize textSize = [JSBubbleView textSizeForText:self.text];
-	CGFloat textX = (CGFloat)image.leftCapWidth - 3.0f + ([self styleIsOutgoing] ? bubbleFrame.origin.x : 0.0f + self.avatarSize.width + margin);
+	CGSize textSize = [JSBubbleView textSizeForText:self.text style:self.style];
+	CGFloat textX = (CGFloat)image.leftCapWidth - [JSBubbleView leftOffsetForStyle:self.style] + ([JSBubbleView styleIsOutgoing:self.style] ? bubbleFrame.origin.x : 0.0f + self.avatarSize.width + margin);
     CGRect textFrame = CGRectMake(textX,
-                                  kPaddingTop + kMarginTop,
+                                  [JSBubbleView topPaddingForStyle:self.style] + kMarginTop,
                                   textSize.width,
                                   textSize.height);
     
@@ -116,11 +119,49 @@
 }
 
 #pragma mark - Bubble view
-- (BOOL)styleIsOutgoing
++ (BOOL)styleIsOutgoing:(JSBubbleMessageStyle)bubbleStyle
 {
-    return (self.style == JSBubbleMessageStyleOutgoingDefault
-            || self.style == JSBubbleMessageStyleOutgoingDefaultGreen
-            || self.style == JSBubbleMessageStyleOutgoingSquare);
+    return (bubbleStyle == JSBubbleMessageStyleOutgoingDefault
+            || bubbleStyle == JSBubbleMessageStyleOutgoingDefaultGreen
+            || bubbleStyle == JSBubbleMessageStyleOutgoingSquare
+            || bubbleStyle == JSBubbleMessageStyleOutgoingUS2GreenTailed
+            || bubbleStyle == JSBubbleMessageStyleOutgoingUS2Green
+            || bubbleStyle == JSBubbleMessageStyleOutgoingUS2Blue
+            || bubbleStyle == JSBubbleMessageStyleOutgoingUS2BlueTailed);
+}
+
++ (BOOL)styleIsUS2:(JSBubbleMessageStyle)bubbleStyle
+{
+    return (bubbleStyle == JSBubbleMessageStyleIncomingUS2
+            || bubbleStyle == JSBubbleMessageStyleIncomingUS2Tailed
+            || bubbleStyle == JSBubbleMessageStyleOutgoingUS2GreenTailed
+            || bubbleStyle == JSBubbleMessageStyleOutgoingUS2Green
+            || bubbleStyle == JSBubbleMessageStyleOutgoingUS2Blue
+            || bubbleStyle == JSBubbleMessageStyleOutgoingUS2BlueTailed);
+}
+
++ (CGFloat)leftOffsetForStyle:(JSBubbleMessageStyle)bubbleStyle
+{
+    CGFloat leftOffset = kPaddingLeftOffset;
+    
+    if ([JSBubbleView styleIsUS2:bubbleStyle] && ![JSBubbleView styleIsOutgoing:bubbleStyle])
+    {
+        leftOffset = kPaddingLeftOffsetUS2;
+    }
+    
+    return leftOffset;
+}
+
++ (CGFloat)topPaddingForStyle:(JSBubbleMessageStyle)bubbleStyle
+{
+    CGFloat topPadding = kPaddingTop;
+    
+    if ([JSBubbleView styleIsUS2:bubbleStyle])
+    {
+        topPadding = kPaddingTopUS2;
+    }
+    
+    return topPadding;
 }
 
 + (UIImage *)bubbleImageForStyle:(JSBubbleMessageStyle)style
@@ -128,9 +169,9 @@
     switch (style) {
         case JSBubbleMessageStyleIncomingDefault:
             return [[UIImage imageNamed:@"messageBubbleGray"] stretchableImageWithLeftCapWidth:23 topCapHeight:15];
+            break;
         case JSBubbleMessageStyleIncomingSquare:
             return [[UIImage imageNamed:@"bubbleSquareIncoming"] stretchableImageWithLeftCapWidth:25 topCapHeight:15];
-            break;
             break;
         case JSBubbleMessageStyleOutgoingDefault:
             return [[UIImage imageNamed:@"messageBubbleBlue"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
@@ -141,6 +182,42 @@
         case JSBubbleMessageStyleOutgoingSquare:
             return [[UIImage imageNamed:@"bubbleSquareOutgoing"] stretchableImageWithLeftCapWidth:15 topCapHeight:15];
             break;
+        case JSBubbleMessageStyleIncomingUS2:
+        {
+            UIImage *image = [UIImage imageNamed:@"chat_bubble_recipient_without_tail"];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(17, 26, 18, 16)];
+            break;
+        }
+        case JSBubbleMessageStyleIncomingUS2Tailed:
+        {
+            UIImage *image = [UIImage imageNamed:@"chat_bubble_recipient_with_tail"];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(17, 26, 18, 16)];
+            break;
+        }
+        case JSBubbleMessageStyleOutgoingUS2Blue:
+        {
+            UIImage *image = [UIImage imageNamed:@"chat_bubble_sender_blue_without_tail"];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 25)];
+            break;
+        }
+        case JSBubbleMessageStyleOutgoingUS2BlueTailed:
+        {
+            UIImage *image = [UIImage imageNamed:@"chat_bubble_sender_blue_with_tail"];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 25)];
+            break;
+        }
+        case JSBubbleMessageStyleOutgoingUS2Green:
+        {
+            UIImage *image = [UIImage imageNamed:@"chat_bubble_sender_green_without_tail"];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 25)];
+            break;
+        }
+        case JSBubbleMessageStyleOutgoingUS2GreenTailed:
+        {
+            UIImage *image = [UIImage imageNamed:@"chat_bubble_sender_green_with_tail"];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 25)];
+            break;
+        }
     }
     
     return nil;
@@ -148,10 +225,10 @@
 
 + (UIFont *)font
 {
-    return [UIFont systemFontOfSize:16.0f];
+    return [UIFont systemFontOfSize:15.0f];
 }
 
-+ (CGSize)textSizeForText:(NSString *)txt
++ (CGSize)textSizeForText:(NSString *)txt style:(JSBubbleMessageStyle)bubbleStyle 
 {
     CGFloat width = [UIScreen mainScreen].applicationFrame.size.width * 0.65f;
     CGFloat height = MAX([JSBubbleView numberOfLinesForMessage:txt],
@@ -162,16 +239,16 @@
                lineBreakMode:NSLineBreakByWordWrapping];
 }
 
-+ (CGSize)bubbleSizeForText:(NSString *)txt
++ (CGSize)bubbleSizeForText:(NSString *)txt style:(JSBubbleMessageStyle)bubbleStyle 
 {
-	CGSize textSize = [JSBubbleView textSizeForText:txt];
+	CGSize textSize = [JSBubbleView textSizeForText:txt style:bubbleStyle];
 	return CGSizeMake(textSize.width + kBubblePaddingRight,
-                      textSize.height + kPaddingTop + kPaddingBottom);
+                      textSize.height + [JSBubbleView topPaddingForStyle:bubbleStyle] + kPaddingBottom);
 }
 
-+ (CGFloat)cellHeightForText:(NSString *)txt
++ (CGFloat)cellHeightForText:(NSString *)txt style:(JSBubbleMessageStyle)bubbleStyle 
 {
-    return [JSBubbleView bubbleSizeForText:txt].height + kMarginTop + kMarginBottom;
+    return [JSBubbleView bubbleSizeForText:txt style:bubbleStyle].height + kMarginTop + kMarginBottom;
 }
 
 + (int)maxCharactersPerLine

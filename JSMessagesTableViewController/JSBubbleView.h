@@ -40,10 +40,14 @@ typedef enum {
     JSBubbleMessageStyleIncomingSquare,
     JSBubbleMessageStyleOutgoingDefault,
 	JSBubbleMessageStyleOutgoingDefaultGreen,
-    JSBubbleMessageStyleOutgoingSquare
+    JSBubbleMessageStyleOutgoingSquare,
+    JSBubbleMessageStyleIncomingUS2Tailed,
+    JSBubbleMessageStyleIncomingUS2,
+    JSBubbleMessageStyleOutgoingUS2Blue,
+    JSBubbleMessageStyleOutgoingUS2BlueTailed,
+    JSBubbleMessageStyleOutgoingUS2Green,
+    JSBubbleMessageStyleOutgoingUS2GreenTailed,
 } JSBubbleMessageStyle;
-
-
 
 @interface JSBubbleView : UIView
 
@@ -55,12 +59,13 @@ typedef enum {
 
 #pragma mark - Bubble view
 + (UIImage *)bubbleImageForStyle:(JSBubbleMessageStyle)style;
++ (CGFloat)topPaddingForStyle:(JSBubbleMessageStyle)bubbleStyle;
 + (UIFont *)font;
-+ (CGSize)textSizeForText:(NSString *)txt;
-+ (CGSize)bubbleSizeForText:(NSString *)txt;
-+ (CGFloat)cellHeightForText:(NSString *)txt;
++ (CGSize)textSizeForText:(NSString *)txt style:(JSBubbleMessageStyle)bubbleStyle;
++ (CGSize)bubbleSizeForText:(NSString *)txt style:(JSBubbleMessageStyle)bubbleStyle;
++ (CGFloat)cellHeightForText:(NSString *)txt style:(JSBubbleMessageStyle)bubbleStyle;
 + (int)maxCharactersPerLine;
 + (int)numberOfLinesForMessage:(NSString *)txt;
-- (BOOL)styleIsOutgoing;
++ (BOOL)styleIsOutgoing:(JSBubbleMessageStyle)style;
 
 @end

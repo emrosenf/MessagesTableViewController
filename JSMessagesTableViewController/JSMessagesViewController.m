@@ -212,7 +212,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CGFloat dateHeight = [self shouldHaveTimestampForRowAtIndexPath:indexPath] ? DATE_LABEL_HEIGHT : 0.0f;
-    CGFloat textHeight = [JSBubbleView cellHeightForText:[self.dataSource textForRowAtIndexPath:indexPath]];
+    CGFloat textHeight = [JSBubbleView cellHeightForText:[self.dataSource textForRowAtIndexPath:indexPath] style:[self.delegate messageStyleForRowAtIndexPath:indexPath]];
     
     if([self.delegate respondsToSelector:@selector(avatarImageForRowAtIndexPath:)])
     {

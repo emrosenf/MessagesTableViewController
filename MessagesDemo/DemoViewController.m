@@ -98,7 +98,7 @@
 
 - (JSBubbleMessageStyle)messageStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return (indexPath.row % 2) ? JSBubbleMessageStyleIncomingDefault : JSBubbleMessageStyleOutgoingDefault;
+    return (indexPath.row % 2) ? JSBubbleMessageStyleIncomingUS2Tailed : JSBubbleMessageStyleOutgoingUS2GreenTailed;
 }
 
 - (JSMessagesViewTimestampPolicy)timestampPolicyForMessagesView
