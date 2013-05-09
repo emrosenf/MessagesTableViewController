@@ -90,7 +90,10 @@
 
 - (UIImage *)avatarImageForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [UIImage imageNamed:@"avatar.png"];
+    if (indexPath.row % 3 == 0) {
+        return [UIImage imageNamed:@"avatar.png"];
+    }
+    return nil;
 }
 
 - (JSBubbleMessageStyle)messageStyleForRowAtIndexPath:(NSIndexPath *)indexPath

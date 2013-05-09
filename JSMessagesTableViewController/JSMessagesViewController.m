@@ -176,7 +176,7 @@
     
     if([self.delegate respondsToSelector:@selector(avatarImageForRowAtIndexPath:)])
     {
-        UIImage *image = [self.delegate avatarImageForRowAtIndexPath:indexPath];
+        UIImage *image = [self.dataSource avatarImageForRowAtIndexPath:indexPath];
         if(image)
         {
             avatarImage = image;
@@ -216,7 +216,7 @@
     
     if([self.delegate respondsToSelector:@selector(avatarImageForRowAtIndexPath:)])
     {
-        CGFloat avatarHeight = [self.delegate avatarImageForRowAtIndexPath:indexPath].size.height;
+        CGFloat avatarHeight = [self.dataSource avatarImageForRowAtIndexPath:indexPath].size.height;
         textHeight = textHeight < avatarHeight ? avatarHeight : textHeight;
     }
 
