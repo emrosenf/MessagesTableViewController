@@ -39,7 +39,7 @@
 
 #define kMarginTop 8.0f
 #define kMarginBottom 4.0f
-#define kAvatarMargin 20.0f
+#define kAvatarMargin 15.0f
 #define kPaddingTop 4.0f
 #define kPaddingTopUS2 7.0f
 #define kPaddingTopUS2GreenBlue 8.0f
@@ -193,13 +193,13 @@
         case JSBubbleMessageStyleIncomingUS2:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_recipient_without_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(17, 26, 18, 16)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 25, 18, 18)];
             break;
         }
         case JSBubbleMessageStyleIncomingUS2Tailed:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_recipient_with_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(17, 26, 18, 16)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 25, 18, 18)];
             break;
         }
         case JSBubbleMessageStyleOutgoingUS2Blue:
