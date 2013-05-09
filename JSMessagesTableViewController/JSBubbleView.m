@@ -145,7 +145,7 @@
 {
     CGFloat leftOffset = kPaddingLeftOffset;
     
-    if ([JSBubbleView styleIsUS2:bubbleStyle] && ![JSBubbleView styleIsOutgoing:bubbleStyle])
+    if ([JSBubbleView styleIsUS2:bubbleStyle])
     {
         leftOffset = kPaddingLeftOffsetUS2;
     }
