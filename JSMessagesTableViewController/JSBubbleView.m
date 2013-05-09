@@ -46,7 +46,7 @@
 #define kPaddingBottom 8.0f
 #define kBubblePaddingRight 35.0f
 #define kPaddingLeftOffset 3.0f
-#define kPaddingLeftOffsetUS2 5.0f
+#define kPaddingLeftOffsetUS2 4.0f
 
 @interface JSBubbleView()
 
@@ -193,13 +193,13 @@
         case JSBubbleMessageStyleIncomingUS2:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_recipient_without_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 25, 18, 18)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(17, 26, 18, 16)];
             break;
         }
         case JSBubbleMessageStyleIncomingUS2Tailed:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_recipient_with_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 25, 18, 18)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(17, 26, 18, 16)];
             break;
         }
         case JSBubbleMessageStyleOutgoingUS2Blue:
