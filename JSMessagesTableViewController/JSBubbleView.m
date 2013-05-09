@@ -42,6 +42,7 @@
 #define kAvatarMargin 20.0f
 #define kPaddingTop 4.0f
 #define kPaddingTopUS2 7.0f
+#define kPaddingTopUS2GreenBlue 8.0f
 #define kPaddingBottom 8.0f
 #define kBubblePaddingRight 35.0f
 #define kPaddingLeftOffset 3.0f
@@ -156,7 +157,14 @@
 {
     CGFloat topPadding = kPaddingTop;
     
-    if ([JSBubbleView styleIsUS2:bubbleStyle])
+    if(bubbleStyle == JSBubbleMessageStyleOutgoingUS2Green
+       || bubbleStyle == JSBubbleMessageStyleOutgoingUS2GreenTailed
+       || bubbleStyle == JSBubbleMessageStyleOutgoingUS2Blue
+       || bubbleStyle == JSBubbleMessageStyleOutgoingUS2BlueTailed)
+    {
+        topPadding = kPaddingTopUS2GreenBlue;
+    }
+    else if([JSBubbleView styleIsUS2:bubbleStyle])
     {
         topPadding = kPaddingTopUS2;
     }
