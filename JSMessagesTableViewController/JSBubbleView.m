@@ -39,10 +39,9 @@
 
 #define kMarginTop 8.0f
 #define kMarginBottom 4.0f
-#define kAvatarMargin 15.0f
+#define kAvatarMargin 12.0f
 #define kPaddingTop 4.0f
-#define kPaddingTopUS2 7.0f
-#define kPaddingTopUS2GreenBlue 8.0f
+#define kPaddingTopUS2 10.0f
 #define kPaddingBottom 8.0f
 #define kBubblePaddingRight 35.0f
 #define kPaddingLeftOffset 3.0f
@@ -157,14 +156,7 @@
 {
     CGFloat topPadding = kPaddingTop;
     
-    if(bubbleStyle == JSBubbleMessageStyleOutgoingUS2Green
-       || bubbleStyle == JSBubbleMessageStyleOutgoingUS2GreenTailed
-       || bubbleStyle == JSBubbleMessageStyleOutgoingUS2Blue
-       || bubbleStyle == JSBubbleMessageStyleOutgoingUS2BlueTailed)
-    {
-        topPadding = kPaddingTopUS2GreenBlue;
-    }
-    else if([JSBubbleView styleIsUS2:bubbleStyle])
+    if([JSBubbleView styleIsUS2:bubbleStyle])
     {
         topPadding = kPaddingTopUS2;
     }
@@ -193,37 +185,37 @@
         case JSBubbleMessageStyleIncomingUS2:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_recipient_without_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(17, 26, 18, 16)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 26, 21, 16)];
             break;
         }
         case JSBubbleMessageStyleIncomingUS2Tailed:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_recipient_with_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(17, 26, 18, 16)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 26, 21, 16)];
             break;
         }
         case JSBubbleMessageStyleOutgoingUS2Blue:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_sender_blue_without_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 25)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 21, 25)];
             break;
         }
         case JSBubbleMessageStyleOutgoingUS2BlueTailed:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_sender_blue_with_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 25)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 21, 25)];
             break;
         }
         case JSBubbleMessageStyleOutgoingUS2Green:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_sender_green_without_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 25)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 21, 25)];
             break;
         }
         case JSBubbleMessageStyleOutgoingUS2GreenTailed:
         {
             UIImage *image = [UIImage imageNamed:@"chat_bubble_sender_green_with_tail"];
-            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 18, 25)];
+            return [image resizableImageWithCapInsets:UIEdgeInsetsMake(18, 18, 21, 25)];
             break;
         }
     }

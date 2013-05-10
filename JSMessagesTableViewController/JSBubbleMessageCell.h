@@ -37,7 +37,6 @@
 #import "JSBubbleView.h"
 
 #define DATE_LABEL_HEIGHT 12.0f
-#define AVATAR_MARGIN 8.0f
 
 @interface JSBubbleMessageCell : UITableViewCell
 

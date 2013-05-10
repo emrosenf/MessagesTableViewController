@@ -36,6 +36,9 @@
 #import "JSBubbleMessageCell.h"
 #import "UIColor+JSMessagesView.h"
 
+#define kAvatarSideMargins 8.0f
+#define kAvatarYOffset 5.0f
+
 @interface JSBubbleMessageCell()
 
 @property (strong, nonatomic) JSBubbleView *bubbleView;
@@ -89,7 +92,7 @@
 
 - (void)configureAvatarImageViewWithImage:(UIImage *)image bubbleView:(JSBubbleView *)bubbleView
 {
-    self.avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake([JSBubbleView styleIsOutgoing:bubbleView.style] ? self.frame.size.width - image.size.width - AVATAR_MARGIN: AVATAR_MARGIN,
+    self.avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake([JSBubbleView styleIsOutgoing:bubbleView.style] ? self.frame.size.width - image.size.width - kAvatarSideMargins: kAvatarSideMargins,
                                                                          0,
                                                                          image.size.width,
                                                                          image.size.height)];
@@ -157,7 +160,7 @@
     if(self.avatarImageView.image)
     {
         CGRect avatarImageViewFrame = self.avatarImageView.frame;
-        avatarImageViewFrame.origin.y = ([JSBubbleView cellHeightForText:msg style:self.bubbleView.style] - self.avatarImageView.image.size.height - (AVATAR_MARGIN / 2)) + self.timestampLabel.frame.size.height;
+        avatarImageViewFrame.origin.y = ([JSBubbleView cellHeightForText:msg style:self.bubbleView.style] - self.avatarImageView.image.size.height - kAvatarYOffset) + self.timestampLabel.frame.size.height;
         if (self.avatarImageView.frame.origin.y != avatarImageViewFrame.origin.y)
         {
             self.avatarImageView.frame = avatarImageViewFrame;
