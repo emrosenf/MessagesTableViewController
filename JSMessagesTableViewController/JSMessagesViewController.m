@@ -186,7 +186,7 @@
         if(image)
         {
             avatarImage = image;
-            CellID = [NSString stringWithFormat:@"MessageCell_%d_%d_%d", style, hasTimestamp, avatarImage.hash];
+            CellID = [NSString stringWithFormat:@"MessageCell_%d_%d_%d_%@", style, hasTimestamp, avatarImage.hash, NSStringFromUIEdgeInsets(edgeInsets)];
         }
     }
     else
