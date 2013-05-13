@@ -172,9 +172,15 @@
     JSBubbleMessageStyle style = [self.delegate messageStyleForRowAtIndexPath:indexPath];
     BOOL hasTimestamp = [self shouldHaveTimestampForRowAtIndexPath:indexPath];
     UIImage *avatarImage = nil;
+    UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
     NSString *CellID;
     
-    if([self.delegate respondsToSelector:@selector(avatarImageForRowAtIndexPath:)])
+    if([self.dataSource respondsToSelector:@selector(edgeInsetForRowAtIndexPath:)])
+    {
+        edgeInsets = [self.dataSource edgeInsetForRowAtIndexPath:indexPath];
+    }
+    
+    if([self.dataSource respondsToSelector:@selector(avatarImageForRowAtIndexPath:)])
     {
         UIImage *image = [self.dataSource avatarImageForRowAtIndexPath:indexPath];
         if(image)
@@ -194,6 +200,7 @@
         cell = [[JSBubbleMessageCell alloc] initWithBubbleStyle:style
                                                    hasTimestamp:hasTimestamp
                                                     avatarImage:avatarImage
+                                                     edgeInsets:edgeInsets
                                                 reuseIdentifier:CellID];
     }
     

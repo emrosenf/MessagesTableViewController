@@ -53,9 +53,10 @@ typedef enum {
 
 @property (assign, nonatomic) JSBubbleMessageStyle style;
 @property (copy, nonatomic) NSString *text;
+@property (assign, nonatomic) UIEdgeInsets edgeInsets;
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle avatarSize:(CGSize)avatarSize;
+- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle edgeInsets:(UIEdgeInsets)edgeInsets avatarSize:(CGSize)avatarSize;
 
 #pragma mark - Bubble view
 + (UIImage *)bubbleImageForStyle:(JSBubbleMessageStyle)style;

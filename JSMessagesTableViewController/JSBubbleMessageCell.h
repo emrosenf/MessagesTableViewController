@@ -44,6 +44,7 @@
 - (id)initWithBubbleStyle:(JSBubbleMessageStyle)style
              hasTimestamp:(BOOL)hasTimestamp
               avatarImage:(UIImage *)avatarImage
+               edgeInsets:(UIEdgeInsets)edgeInsets
           reuseIdentifier:(NSString *)reuseIdentifier;
 
 #pragma mark - Message Cell

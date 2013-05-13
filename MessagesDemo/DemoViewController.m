@@ -90,10 +90,20 @@
 
 - (UIImage *)avatarImageForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row % 3 == 0) {
+    if (indexPath.row % 2 == 0) {
         return [UIImage imageNamed:@"avatar.png"];
     }
     return nil;
+}
+
+- (UIEdgeInsets)edgeInsetForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row % 2 == 0)
+    {
+        return UIEdgeInsetsMake(0, 0, 0, [UIImage imageNamed:@"avatar.png"].size.width + 15);
+    }
+    
+    return UIEdgeInsetsMake(0, 5, 0, 0);
 }
 
 - (JSBubbleMessageStyle)messageStyleForRowAtIndexPath:(NSIndexPath *)indexPath

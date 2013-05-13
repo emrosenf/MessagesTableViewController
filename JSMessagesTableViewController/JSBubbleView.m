@@ -39,7 +39,6 @@
 
 #define kMarginTop 8.0f
 #define kMarginBottom 4.0f
-#define kAvatarMargin 12.0f
 #define kPaddingTop 4.0f
 #define kPaddingTopUS2 10.0f
 #define kPaddingBottom 8.0f
@@ -68,12 +67,13 @@
     self.backgroundColor = [UIColor clearColor];
 }
 
-- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle avatarSize:(CGSize)avatarSize
+- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle edgeInsets:(UIEdgeInsets)edgeInsets avatarSize:(CGSize)avatarSize
 {
     self = [super initWithFrame:frame];
     if(self) {
         self.style = bubbleStyle;
         self.avatarSize = avatarSize;
+        self.edgeInsets = edgeInsets;
         [self setup];
     }
     return self;
@@ -97,18 +97,18 @@
 {
 	UIImage *image = [JSBubbleView bubbleImageForStyle:self.style];
     CGSize bubbleSize = [JSBubbleView bubbleSizeForText:self.text style:self.style];
-    CGFloat margin =  self.avatarSize.width > 0 ? kAvatarMargin : 0;
-	CGRect bubbleFrame = CGRectMake(([JSBubbleView styleIsOutgoing:self.style] ? self.frame.size.width - bubbleSize.width - self.avatarSize.width - margin: 0.0f + self.avatarSize.width + margin),
-                                    kMarginTop,
+    
+	CGRect bubbleFrame = CGRectMake(([JSBubbleView styleIsOutgoing:self.style] ? self.frame.size.width - bubbleSize.width - self.edgeInsets.right : 0.0f + self.edgeInsets.left),
+                                    kMarginTop + (self.edgeInsets.top - self.edgeInsets.bottom),
                                     bubbleSize.width,
                                     bubbleSize.height);
     
 	[image drawInRect:bubbleFrame];
 	
 	CGSize textSize = [JSBubbleView textSizeForText:self.text style:self.style];
-	CGFloat textX = (CGFloat)image.leftCapWidth - [JSBubbleView leftOffsetForStyle:self.style] + ([JSBubbleView styleIsOutgoing:self.style] ? bubbleFrame.origin.x : 0.0f + self.avatarSize.width + margin);
+	CGFloat textX = (CGFloat)image.leftCapWidth - [JSBubbleView leftOffsetForStyle:self.style] + ([JSBubbleView styleIsOutgoing:self.style] ? bubbleFrame.origin.x : 0.0f + self.avatarSize.width + self.edgeInsets.left);
     CGRect textFrame = CGRectMake(textX,
-                                  [JSBubbleView topPaddingForStyle:self.style] + kMarginTop,
+                                  [JSBubbleView topPaddingForStyle:self.style] + kMarginTop + (self.edgeInsets.top - self.edgeInsets.bottom),
                                   textSize.width,
                                   textSize.height);
     

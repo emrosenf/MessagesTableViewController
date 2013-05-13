@@ -47,7 +47,6 @@
 
 - (void)setup;
 - (void)configureTimestampLabel;
-- (void)configureWithStyle:(JSBubbleMessageStyle)style avatarImage:(UIImage *)avatarImage timestamp:(BOOL)hasTimestamp;
 - (void)configureAvatarImageViewWithImage:(UIImage *)image bubbleView:(JSBubbleView *)bubbleView;
 
 @end
@@ -101,7 +100,7 @@
     [self.contentView bringSubviewToFront:self.avatarImageView];
 }
 
-- (void)configureWithStyle:(JSBubbleMessageStyle)style avatarImage:(UIImage *)avatarImage timestamp:(BOOL)hasTimestamp
+- (void)configureWithStyle:(JSBubbleMessageStyle)style avatarImage:(UIImage *)avatarImage edgeInsets:(UIEdgeInsets)edgeInsets timestamp:(BOOL)hasTimestamp
 {
     CGFloat bubbleY = 0.0f;
     
@@ -117,6 +116,7 @@
     
     self.bubbleView = [[JSBubbleView alloc] initWithFrame:frame
                                               bubbleStyle:style
+                                               edgeInsets:edgeInsets
                                                    avatarSize:avatarImage.size];
     
     self.bubbleView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -129,12 +129,12 @@
     [self.contentView sendSubviewToBack:self.bubbleView];
 }
 
-- (id)initWithBubbleStyle:(JSBubbleMessageStyle)style hasTimestamp:(BOOL)hasTimestamp avatarImage:(UIImage *)avatarImage reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithBubbleStyle:(JSBubbleMessageStyle)style hasTimestamp:(BOOL)hasTimestamp avatarImage:(UIImage *)avatarImage edgeInsets:(UIEdgeInsets)edgeInsets reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if(self) {
         [self setup];
-        [self configureWithStyle:style avatarImage:avatarImage timestamp:hasTimestamp];
+        [self configureWithStyle:style avatarImage:avatarImage edgeInsets:edgeInsets timestamp:hasTimestamp];
     }
     return self;
 }
