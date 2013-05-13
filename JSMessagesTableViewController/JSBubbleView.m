@@ -48,8 +48,6 @@
 
 @interface JSBubbleView()
 
-@property (assign, nonatomic) CGSize avatarSize;
-
 - (void)setup;
 
 @end
@@ -67,12 +65,11 @@
     self.backgroundColor = [UIColor clearColor];
 }
 
-- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle edgeInsets:(UIEdgeInsets)edgeInsets avatarSize:(CGSize)avatarSize
+- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle edgeInsets:(UIEdgeInsets)edgeInsets
 {
     self = [super initWithFrame:frame];
     if(self) {
         self.style = bubbleStyle;
-        self.avatarSize = avatarSize;
         self.edgeInsets = edgeInsets;
         [self setup];
     }
@@ -98,7 +95,7 @@
 	UIImage *image = [JSBubbleView bubbleImageForStyle:self.style];
     CGSize bubbleSize = [JSBubbleView bubbleSizeForText:self.text style:self.style];
     
-	CGRect bubbleFrame = CGRectMake(([JSBubbleView styleIsOutgoing:self.style] ? self.frame.size.width - bubbleSize.width - self.edgeInsets.right : 0.0f + self.edgeInsets.left),
+	CGRect bubbleFrame = CGRectMake(([JSBubbleView styleIsOutgoing:self.style] ? (self.frame.size.width - bubbleSize.width) - self.edgeInsets.right : 0.0f + self.edgeInsets.left),
                                     kMarginTop + (self.edgeInsets.top - self.edgeInsets.bottom),
                                     bubbleSize.width,
                                     bubbleSize.height);
@@ -106,7 +103,7 @@
 	[image drawInRect:bubbleFrame];
 	
 	CGSize textSize = [JSBubbleView textSizeForText:self.text style:self.style];
-	CGFloat textX = (CGFloat)image.leftCapWidth - [JSBubbleView leftOffsetForStyle:self.style] + ([JSBubbleView styleIsOutgoing:self.style] ? bubbleFrame.origin.x : 0.0f + self.avatarSize.width + self.edgeInsets.left);
+	CGFloat textX = (CGFloat)image.leftCapWidth - [JSBubbleView leftOffsetForStyle:self.style] + ([JSBubbleView styleIsOutgoing:self.style] ? bubbleFrame.origin.x : 0.0f + self.edgeInsets.left);
     CGRect textFrame = CGRectMake(textX,
                                   [JSBubbleView topPaddingForStyle:self.style] + kMarginTop + (self.edgeInsets.top - self.edgeInsets.bottom),
                                   textSize.width,

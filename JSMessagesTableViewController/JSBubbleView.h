@@ -56,7 +56,7 @@ typedef enum {
 @property (assign, nonatomic) UIEdgeInsets edgeInsets;
 
 #pragma mark - Initialization
-- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle edgeInsets:(UIEdgeInsets)edgeInsets avatarSize:(CGSize)avatarSize;
+- (id)initWithFrame:(CGRect)frame bubbleStyle:(JSBubbleMessageStyle)bubbleStyle edgeInsets:(UIEdgeInsets)edgeInsets;
 
 #pragma mark - Bubble view
 + (UIImage *)bubbleImageForStyle:(JSBubbleMessageStyle)style;

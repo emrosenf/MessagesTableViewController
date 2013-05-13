@@ -88,10 +88,11 @@
     [self finishSend];
 }
 
-- (UIImage *)avatarImageForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UIView *)accesoryViewForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row % 2 == 0) {
-        return [UIImage imageNamed:@"avatar.png"];
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar.png"]];
+        return imageView;
     }
     return nil;
 }

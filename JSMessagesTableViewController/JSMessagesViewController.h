@@ -66,7 +66,7 @@ typedef enum {
 - (NSDate *)timestampForRowAtIndexPath:(NSIndexPath *)indexPath;
 @optional
 - (UIEdgeInsets)edgeInsetForRowAtIndexPath:(NSIndexPath *)indexPath;
-- (UIImage *)avatarImageForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (UIView *)accesoryViewForRowAtIndexPath:(NSIndexPath *)indexPath;
 @end
 
 

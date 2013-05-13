@@ -43,7 +43,7 @@
 #pragma mark - Initialization
 - (id)initWithBubbleStyle:(JSBubbleMessageStyle)style
              hasTimestamp:(BOOL)hasTimestamp
-              avatarImage:(UIImage *)avatarImage
+            accessoryView:(UIView *)accessoryView
                edgeInsets:(UIEdgeInsets)edgeInsets
           reuseIdentifier:(NSString *)reuseIdentifier;
 

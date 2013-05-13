@@ -171,22 +171,21 @@
 {
     JSBubbleMessageStyle style = [self.delegate messageStyleForRowAtIndexPath:indexPath];
     BOOL hasTimestamp = [self shouldHaveTimestampForRowAtIndexPath:indexPath];
-    UIImage *avatarImage = nil;
     UIEdgeInsets edgeInsets = UIEdgeInsetsZero;
-    NSString *CellID;
+    UIView *accessoryView = nil;
+    NSString *CellID = nil;
     
     if([self.dataSource respondsToSelector:@selector(edgeInsetForRowAtIndexPath:)])
     {
         edgeInsets = [self.dataSource edgeInsetForRowAtIndexPath:indexPath];
     }
     
-    if([self.dataSource respondsToSelector:@selector(avatarImageForRowAtIndexPath:)])
+    if([self.dataSource respondsToSelector:@selector(accesoryViewForRowAtIndexPath:)])
     {
-        UIImage *image = [self.dataSource avatarImageForRowAtIndexPath:indexPath];
-        if(image)
+        accessoryView = [self.dataSource accesoryViewForRowAtIndexPath:indexPath];
+        if(accessoryView)
         {
-            avatarImage = image;
-            CellID = [NSString stringWithFormat:@"MessageCell_%d_%d_%d_%@", style, hasTimestamp, avatarImage.hash, NSStringFromUIEdgeInsets(edgeInsets)];
+            CellID = [NSString stringWithFormat:@"MessageCell_%d_%d_%d_%@", style, hasTimestamp, accessoryView.hash, NSStringFromUIEdgeInsets(edgeInsets)];
         }
     }
     else
@@ -199,7 +198,7 @@
     if(!cell) {
         cell = [[JSBubbleMessageCell alloc] initWithBubbleStyle:style
                                                    hasTimestamp:hasTimestamp
-                                                    avatarImage:avatarImage
+                                                    accessoryView:accessoryView
                                                      edgeInsets:edgeInsets
                                                 reuseIdentifier:CellID];
     }
@@ -221,10 +220,10 @@
     CGFloat dateHeight = [self shouldHaveTimestampForRowAtIndexPath:indexPath] ? DATE_LABEL_HEIGHT : 0.0f;
     CGFloat textHeight = [JSBubbleView cellHeightForText:[self.dataSource textForRowAtIndexPath:indexPath] style:[self.delegate messageStyleForRowAtIndexPath:indexPath]];
     
-    if([self.delegate respondsToSelector:@selector(avatarImageForRowAtIndexPath:)])
+    if([self.dataSource respondsToSelector:@selector(accesoryViewForRowAtIndexPath:)])
     {
-        CGFloat avatarHeight = [self.dataSource avatarImageForRowAtIndexPath:indexPath].size.height;
-        textHeight = textHeight < avatarHeight ? avatarHeight : textHeight;
+        CGFloat accessoryViewHeight = [self.dataSource accesoryViewForRowAtIndexPath:indexPath].frame.size.height;
+        textHeight = textHeight < accessoryViewHeight ? accessoryViewHeight : textHeight;
     }
 
     return textHeight + dateHeight;

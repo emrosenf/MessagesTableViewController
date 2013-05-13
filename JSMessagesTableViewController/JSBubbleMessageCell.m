@@ -43,11 +43,12 @@
 
 @property (strong, nonatomic) JSBubbleView *bubbleView;
 @property (strong, nonatomic) UILabel *timestampLabel;
-@property (strong, nonatomic) UIImageView *avatarImageView;
+@property (strong, nonatomic) UIView *accessoryView;
+@property (assign, nonatomic) JSBubbleMessageStyle messageStyle;
+@property (assign, nonatomic) UIEdgeInsets edgeInsets;
 
 - (void)setup;
 - (void)configureTimestampLabel;
-- (void)configureAvatarImageViewWithImage:(UIImage *)image bubbleView:(JSBubbleView *)bubbleView;
 
 @end
 
@@ -61,7 +62,6 @@
     self.backgroundColor = [UIColor clearColor];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.accessoryType = UITableViewCellAccessoryNone;
-    self.accessoryView = nil;
     
     self.imageView.image = nil;
     self.imageView.hidden = YES;
@@ -89,18 +89,7 @@
     [self.contentView bringSubviewToFront:self.timestampLabel];
 }
 
-- (void)configureAvatarImageViewWithImage:(UIImage *)image bubbleView:(JSBubbleView *)bubbleView
-{
-    self.avatarImageView = [[UIImageView alloc] initWithFrame:CGRectMake([JSBubbleView styleIsOutgoing:bubbleView.style] ? self.frame.size.width - image.size.width - kAvatarSideMargins: kAvatarSideMargins,
-                                                                         0,
-                                                                         image.size.width,
-                                                                         image.size.height)];
-    [self.avatarImageView setImage:image];
-    [self.contentView addSubview:self.avatarImageView];
-    [self.contentView bringSubviewToFront:self.avatarImageView];
-}
-
-- (void)configureWithStyle:(JSBubbleMessageStyle)style avatarImage:(UIImage *)avatarImage edgeInsets:(UIEdgeInsets)edgeInsets timestamp:(BOOL)hasTimestamp
+- (void)configureWithTimestamp:(BOOL)hasTimestamp
 {
     CGFloat bubbleY = 0.0f;
     
@@ -114,27 +103,33 @@
                               self.contentView.frame.size.width,
                               self.contentView.frame.size.height - self.timestampLabel.frame.size.height);
     
-    self.bubbleView = [[JSBubbleView alloc] initWithFrame:frame
-                                              bubbleStyle:style
-                                               edgeInsets:edgeInsets
-                                                   avatarSize:avatarImage.size];
-    
-    self.bubbleView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    
-    if(avatarImage) {
-        [self configureAvatarImageViewWithImage:avatarImage bubbleView:self.bubbleView];
+    if(self.accessoryView) {
+        
+        [self.contentView addSubview:self.accessoryView];
+        [self.contentView bringSubviewToFront:self.accessoryView];
     }
+    
+    self.bubbleView = [[JSBubbleView alloc] initWithFrame:frame
+                                              bubbleStyle:self.messageStyle
+                                               edgeInsets:self.edgeInsets];
+    
+    self.bubbleView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    
     
     [self.contentView addSubview:self.bubbleView];
     [self.contentView sendSubviewToBack:self.bubbleView];
 }
 
-- (id)initWithBubbleStyle:(JSBubbleMessageStyle)style hasTimestamp:(BOOL)hasTimestamp avatarImage:(UIImage *)avatarImage edgeInsets:(UIEdgeInsets)edgeInsets reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithBubbleStyle:(JSBubbleMessageStyle)style hasTimestamp:(BOOL)hasTimestamp accessoryView:(UIView *)accessoryView edgeInsets:(UIEdgeInsets)edgeInsets reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
     if(self) {
+        self.accessoryView = accessoryView;
+        self.edgeInsets = edgeInsets;
+        self.messageStyle = style;
+        
         [self setup];
-        [self configureWithStyle:style avatarImage:avatarImage edgeInsets:edgeInsets timestamp:hasTimestamp];
+        [self configureWithTimestamp:hasTimestamp];
     }
     return self;
 }
@@ -147,25 +142,29 @@
     [self.bubbleView setBackgroundColor:color];
 }
 
-#pragma mark - Message Cell
-- (void)setAvatarImage:(UIImage *)image
+#pragma mark - Layout
+
+- (void)layoutSubviews
 {
-    self.avatarImageView.image = image;
+    [super layoutSubviews];
+    
+    if(self.accessoryView)
+    {
+        CGFloat cellHeight = [JSBubbleView cellHeightForText:self.bubbleView.text style:self.bubbleView.style];
+        
+        self.accessoryView.frame = CGRectMake([JSBubbleView styleIsOutgoing:self.bubbleView.style] ? self.frame.size.width - self.accessoryView.frame.size.width - kAvatarSideMargins : kAvatarSideMargins,
+                                              (cellHeight - self.accessoryView.frame.size.height - kAvatarYOffset) + self.timestampLabel.frame.size.height,
+                                              self.accessoryView.frame.size.width,
+                                              self.accessoryView.frame.size.height);
+    }
 }
+
+#pragma mark - Message Cell
 
 - (void)setMessage:(NSString *)msg
 {
     self.bubbleView.text = msg;
-    
-    if(self.avatarImageView.image)
-    {
-        CGRect avatarImageViewFrame = self.avatarImageView.frame;
-        avatarImageViewFrame.origin.y = ([JSBubbleView cellHeightForText:msg style:self.bubbleView.style] - self.avatarImageView.image.size.height - kAvatarYOffset) + self.timestampLabel.frame.size.height;
-        if (self.avatarImageView.frame.origin.y != avatarImageViewFrame.origin.y)
-        {
-            self.avatarImageView.frame = avatarImageViewFrame;
-        }
-    }
+    [self setNeedsLayout];
 }
 
 - (void)setTimestamp:(NSDate *)date
