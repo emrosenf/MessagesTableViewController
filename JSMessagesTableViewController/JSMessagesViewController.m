@@ -180,9 +180,9 @@
         edgeInsets = [self.dataSource edgeInsetForRowAtIndexPath:indexPath];
     }
     
-    if([self.dataSource respondsToSelector:@selector(accesoryViewForRowAtIndexPath:)])
+    if([self.dataSource respondsToSelector:@selector(accessoryViewForRowAtIndexPath:)])
     {
-        accessoryView = [self.dataSource accesoryViewForRowAtIndexPath:indexPath];
+        accessoryView = [self.dataSource accessoryViewForRowAtIndexPath:indexPath];
         if(accessoryView)
         {
             CellID = [NSString stringWithFormat:@"MessageCell_%d_%d_%d_%@", style, hasTimestamp, accessoryView.hash, NSStringFromUIEdgeInsets(edgeInsets)];
@@ -220,9 +220,9 @@
     CGFloat dateHeight = [self shouldHaveTimestampForRowAtIndexPath:indexPath] ? DATE_LABEL_HEIGHT : 0.0f;
     CGFloat textHeight = [JSBubbleView cellHeightForText:[self.dataSource textForRowAtIndexPath:indexPath] style:[self.delegate messageStyleForRowAtIndexPath:indexPath]];
     
-    if([self.dataSource respondsToSelector:@selector(accesoryViewForRowAtIndexPath:)])
+    if([self.dataSource respondsToSelector:@selector(accessoryViewForRowAtIndexPath:)])
     {
-        CGFloat accessoryViewHeight = [self.dataSource accesoryViewForRowAtIndexPath:indexPath].frame.size.height;
+        CGFloat accessoryViewHeight = [self.dataSource accessoryViewForRowAtIndexPath:indexPath].frame.size.height;
         textHeight = textHeight < accessoryViewHeight ? accessoryViewHeight : textHeight;
     }
 

@@ -88,7 +88,7 @@
     [self finishSend];
 }
 
-- (UIView *)accesoryViewForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UIView *)accessoryViewForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row % 2 == 0) {
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"avatar.png"]];
