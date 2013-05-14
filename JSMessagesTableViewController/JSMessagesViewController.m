@@ -175,9 +175,9 @@
     UIView *accessoryView = nil;
     NSString *CellID = nil;
     
-    if([self.dataSource respondsToSelector:@selector(edgeInsetForRowAtIndexPath:)])
+    if([self.dataSource respondsToSelector:@selector(edgeInsetsForRowAtIndexPath:)])
     {
-        edgeInsets = [self.dataSource edgeInsetForRowAtIndexPath:indexPath];
+        edgeInsets = [self.dataSource edgeInsetsForRowAtIndexPath:indexPath];
     }
     
     if([self.dataSource respondsToSelector:@selector(accessoryViewForRowAtIndexPath:)])

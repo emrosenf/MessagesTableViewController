@@ -97,7 +97,7 @@
     return nil;
 }
 
-- (UIEdgeInsets)edgeInsetForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UIEdgeInsets)edgeInsetsForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.row % 2 == 0)
     {
