@@ -35,6 +35,7 @@
 
 #import "JSMessageInputView.h"
 #import "JSBubbleView.h"
+#import "UIButton+JSMessagesView.h"
 #import "NSString+JSMessagesView.h"
 
 #define SEND_BUTTON_WIDTH 78.0f
@@ -72,6 +73,14 @@
     self.opaque = YES;
     self.userInteractionEnabled = YES;
     [self setupTextView];
+    [self setupSendButton];
+}
+
+- (void) setupSendButton {
+    UIButton *sendBtn = [UIButton defaultSendButton];
+    sendBtn.frame = CGRectMake(self.frame.size.width - 65.0f, 8.0f, 59.0f, 26.0f);
+    self.sendButton = sendBtn;
+    [self addSubview:self.sendButton];
 }
 
 - (void)setupTextView
@@ -103,16 +112,6 @@
     self.textViewBackground.autoresizingMask = (UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight);
     self.textViewBackground.backgroundColor = [UIColor clearColor];
     [self addSubview:self.textViewBackground];
-}
-
-#pragma mark - Setters
-- (void)setSendButton:(UIButton *)btn
-{
-    if(sendButton)
-        [sendButton removeFromSuperview];
-    
-    sendButton = btn;
-    [self addSubview:self.sendButton];
 }
 
 #pragma mark - Message input view

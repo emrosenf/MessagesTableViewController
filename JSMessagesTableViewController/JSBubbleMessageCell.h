@@ -48,6 +48,8 @@
           reuseIdentifier:(NSString *)reuseIdentifier;
 
 #pragma mark - Message Cell
+- (void)configureTimestampLabel;
+- (void)setup;
 - (void)setMessage:(NSString *)msg;
 - (void)setTimestamp:(NSDate *)date;
 

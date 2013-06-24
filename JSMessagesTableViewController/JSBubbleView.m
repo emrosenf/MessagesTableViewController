@@ -240,7 +240,7 @@
 {
 	CGSize textSize = [JSBubbleView textSizeForText:txt style:bubbleStyle];
 	return CGSizeMake(textSize.width + kBubblePaddingRight,
-                      textSize.height + [JSBubbleView topPaddingForStyle:bubbleStyle] + kPaddingBottom);
+                      MAX(44, textSize.height + [JSBubbleView topPaddingForStyle:bubbleStyle] + kPaddingBottom));
 }
 
 + (CGFloat)cellHeightForText:(NSString *)txt style:(JSBubbleMessageStyle)bubbleStyle 

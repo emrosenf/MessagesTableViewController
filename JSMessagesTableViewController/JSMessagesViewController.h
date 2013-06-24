@@ -62,6 +62,7 @@ typedef enum {
 
 @protocol JSMessagesViewDataSource <NSObject>
 @required
+- (UIImage *)imageForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (NSString *)textForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (NSDate *)timestampForRowAtIndexPath:(NSIndexPath *)indexPath;
 @optional
@@ -81,6 +82,7 @@ typedef enum {
 
 #pragma mark - Initialization
 - (UIButton *)sendButton;
+- (void) setupInputView;
 
 #pragma mark - Actions
 - (void)sendPressed:(UIButton *)sender;

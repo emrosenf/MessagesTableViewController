@@ -45,6 +45,8 @@
 - (id)initWithFrame:(CGRect)frame
            delegate:(id<UITextViewDelegate>)delegate;
 
+- (void) setupSendButton;
+
 #pragma mark - Message input view
 - (void)adjustTextViewHeightBy:(CGFloat)changeInHeight;
 + (CGFloat)textViewLineHeight;

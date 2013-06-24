@@ -68,28 +68,26 @@
 	[self.view addSubview:self.tableView];
 	
     [self setBackgroundColor:[UIColor messagesBackgroundColor]];
-    
-    CGRect inputFrame = CGRectMake(0.0f, size.height - INPUT_HEIGHT, size.width, INPUT_HEIGHT);
-    self.inputView = [[JSMessageInputView alloc] initWithFrame:inputFrame delegate:self];
-    
-    UIButton *sendButton = [self sendButton];
-    sendButton.enabled = NO;
-    sendButton.frame = CGRectMake(self.inputView.frame.size.width - 65.0f, 8.0f, 59.0f, 26.0f);
-    [sendButton addTarget:self
-                   action:@selector(sendPressed:)
-         forControlEvents:UIControlEventTouchUpInside];
-    [self.inputView setSendButton:sendButton];
-    [self.view addSubview:self.inputView];
+    [self setupInputView];
+    [self.inputView.sendButton addTarget:self
+                                  action:@selector(sendPressed:)
+                        forControlEvents:UIControlEventTouchUpInside];
+    self.inputView.sendButton.enabled = NO;
     
     UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
     swipe.direction = UISwipeGestureRecognizerDirectionDown;
     swipe.numberOfTouchesRequired = 1;
     [self.inputView addGestureRecognizer:swipe];
+    [self.view addSubview:self.inputView];
 }
 
-- (UIButton *)sendButton
-{
-    return [UIButton defaultSendButton];
+- (void) setupInputView {
+    if (!self.inputView) {
+        CGSize size = self.view.frame.size;
+        
+        CGRect inputFrame = CGRectMake(0.0f, size.height - INPUT_HEIGHT, size.width, INPUT_HEIGHT);
+        self.inputView = [[JSMessageInputView alloc] initWithFrame:inputFrame delegate:self];
+    }
 }
 
 #pragma mark - View lifecycle
