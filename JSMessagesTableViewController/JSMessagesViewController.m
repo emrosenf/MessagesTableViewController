@@ -308,7 +308,7 @@
     if(changeInHeight != 0.0f) {
         [UIView animateWithDuration:0.25f
                          animations:^{
-                             UIEdgeInsets insets = UIEdgeInsetsMake(0.0f, 0.0f, self.tableView.contentInset.bottom + changeInHeight, 0.0f);
+                             UIEdgeInsets insets = UIEdgeInsetsMake(self.tableView.contentInset.top, 0.0f, self.tableView.contentInset.bottom + changeInHeight, 0.0f);
                              self.tableView.contentInset = insets;
                              self.tableView.scrollIndicatorInsets = insets;
                             
@@ -367,16 +367,17 @@
                                                            inputViewFrame.size.width,
                                                            inputViewFrame.size.height);
                          
-                         UIEdgeInsets insets = UIEdgeInsetsMake(0.0f,
-                                                                0.0f,
-                                                                self.view.frame.size.height - self.inputView.frame.origin.y - INPUT_HEIGHT,
-                                                                0.0f);
-                         
-                         self.tableView.contentInset = insets;
-                         self.tableView.scrollIndicatorInsets = insets;
+
                      }
                      completion:^(BOOL finished) {
                      }];
+    UIEdgeInsets insets = UIEdgeInsetsMake(self.tableView.contentInset.top,
+                                           0.0f,
+                                           self.view.frame.size.height - self.inputView.frame.origin.y - INPUT_HEIGHT,
+                                           0.0f);
+    
+    self.tableView.contentInset = insets;
+    self.tableView.scrollIndicatorInsets = insets;
 }
 
 @end
